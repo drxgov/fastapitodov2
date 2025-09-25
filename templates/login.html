@@ -9,7 +9,12 @@
 <body>
     <div class="container">
         <h1 class="title">Войти</h1>
-        <form action="/auth/login" method="post" class="form">
+        {% if message %}
+        <div class="banner {{ 'success' if success else 'error' }}">
+        {{ message }}
+        </div>
+        {% endif %}
+        <form action="/login" method="post" class="form">
             <input type="text" name="username" placeholder="Имя пользователя" required>
             <input type="password" name="password" placeholder="Пароль" required>
             <button type="submit" class="btn">Войти</button>
