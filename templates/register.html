@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Регистрация | ToDo App</title>
+  <link rel="stylesheet" href="/templates/css/login.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Регистрация</h1>
+
+    {% if message %}
+    <div class="banner {{ 'success' if success else 'error' }}">
+      {{ message }}
+    </div>
+  {% endif %}
+
+    <form action="/user/register" method="post" class="form">
+      <input type="text" name="username" placeholder="Имя пользователя" required>
+      <input type="password" name="password" placeholder="Пароль" required>
+      <input type="password" name="confirmPassword" placeholder="повторите пароль" required>
+      <button type="submit" class="btn secondary">Создать аккаунт</button>
+    </form>
+    <p class="alt-link">Уже есть аккаунт? <a href="/login">Войти</a></p>
+    <footer>
+        <p>© 2025 ToDo App created by drxgov</p>
+    </footer>
+  </div>
+</body>
+</html>

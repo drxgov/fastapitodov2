@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход | ToDo App</title>
+    <link rel="stylesheet" href="/templates/css/login.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Войти</h1>
+        <form action="/auth/login" method="post" class="form">
+            <input type="text" name="username" placeholder="Имя пользователя" required>
+            <input type="password" name="password" placeholder="Пароль" required>
+            <button type="submit" class="btn">Войти</button>
+        </form>
+        <p class="alt-link">Нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+    </div>
+    <footer>
+        <p>© 2025 ToDo App created by drxgov</p>
+    </footer>
+</body>
+</html>
