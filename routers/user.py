@@ -57,13 +57,13 @@ async def login_page(request: Request):
 async def loginUser(request: Request,username: str = Form(...), password: str = Form(...),db:Session = Depends(get_db)):
     db_user = db.query(models.User).filter(models.User.username == username).first()
     if not db_user:
-        return templates.TemplateResponse("register.html",{
+        return templates.TemplateResponse("login.html",{
             'request': request,
             'message': 'такого пользователя не существует',
             'succes': False,
             })
     if not utils.verify_password(password, db_user.hashedPassword):
-        return templates.TemplateResponse("register.html", {
+        return templates.TemplateResponse("login.html", {
             'request': request,
             'message': 'неправильно введен пароль',
             'success': False,
