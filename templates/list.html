@@ -1,21 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo App</title>
+
+    <!-- Стили -->
     <link rel="stylesheet" href="/templates/css/login.css">
+    <link rel="stylesheet" href="/templates/css/modal.css">
+
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link 
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" 
+        rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <h1 class="title">Добро пожаловать в ToDo App</h1>
-        <p>доброго времени суток</p>
+        <p>Доброго времени суток!</p>
+
         {% if user %}
-        <p>Пользователь: {{ user.username }}</p>
+            <p><strong>Пользователь:</strong> {{ user.username }}</p>
+
+            <!-- Кнопка добавления задачи -->
+            <button class="add-task-btn" onclick="openModal()">➕ Добавить задачу</button>
+
+            <!-- Список задач -->
+            <div class="task-section">
+                <h2>Ваши задачи:</h2>
+
+                {% if tasks %}
+                                    {% for task in tasks %}
+                    <div class="task-item">
+                        <!-- Название задачи -->
+                        <div class="task-title">
+                            {% if task.is_completed %}
+                                <s>{{ task.title or "Без названия" }}</s>
+                            {% else %}
+                                {{ task.title or "Без названия" }}
+                            {% endif %}
+                        </div>
+
+                        <!-- Описание задачи (вынесено за пределы task-title) -->
+                        {% if task.description %}
+                            <div class="task-description">
+                                {{ task.description }}
+                            </div>
+                        {% endif %}
+
+                        <!-- Кнопки действий -->
+                        <div class="task-actions">
+                            <!-- Отметить выполненной -->
+                            <form method="POST" action="/tasks/{{ task.id }}/complete" style="display:inline;">
+                                <button type="submit" 
+                                        class="complete-btn {% if task.is_completed %}done{% else %}not-done{% endif %}">
+                                    {% if task.is_completed %}
+                                        ✔ Выполнено
+                                    {% else %}
+                                        ✖ Не выполнено
+                                    {% endif %}
+                                </button>
+                            </form>
+
+                            <!-- Удалить задачу -->
+                            <form method="POST" action="/tasks/{{ task.id }}/delete" style="display:inline;">
+                                <button type="submit" class="delete-btn">🗑 Удалить</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% else %}
+                    <p class="no-tasks">У вас пока нет задач. Добавьте первую!</p>
+                {% endif %}
+            </div>
+        {% else %}
+            <p>Пожалуйста, <a href="/login">войдите</a> в систему.</p>
         {% endif %}
     </div>
+
+    <!-- Модальное окно -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 style="color: var(--lavender); margin-bottom: 1.5rem;">Добавить новую задачу</h2>
+
+            <form id="taskForm" method="POST" action="/tasks">
+                <div class="form-group">
+                    <label for="title">Название задачи</label>
+                    <input type="text" id="title" name="title" required placeholder="Введите название...">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Описание (необязательно)</label>
+                    <textarea id="description" name="description" placeholder="Опишите задачу..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Создать задачу</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Подвал -->
     <footer>
         <p>© 2025 ToDo App created by drxgov</p>
     </footer>
+
+    <!-- JS -->
+    <script>
+        function openModal() {
+            document.getElementById('taskModal').style.display = 'flex'; // flex для центрирования
+        }
+
+        function closeModal() {
+            document.getElementById('taskModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('taskModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
 </body>
 </html>

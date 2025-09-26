@@ -1,48 +1,30 @@
 :root {
-  /* Catppuccin Mocha palette */
+  /* 🎨 Catppuccin Mocha Palette */
+  --rosewater: #f5e0dc;
+  --flamingo: #f2cdcd;
+  --pink: #f5c2e7;
+  --mauve: #cba6f7;
+  --red: #f38ba8;
+  --maroon: #eba0ac;
+  --peach: #fab387;
+  --yellow: #f9e2af;
+  --green: #a6e3a1;
+  --teal: #94e2d5;
+  --sky: #89dceb;
+  --sapphire: #74c7ec;
+  --blue: #89b4fa;
+  --lavender: #b4befe;
+
+  --text: #cdd6f4;
+  --subtext0: #a6adc8;
+  --overlay0: #6c7086;
+
   --base: #1e1e2e;
   --mantle: #181825;
   --crust: #11111b;
-  --text: #cdd6f4;
-  --subtext0: #a6adc8;
-  --blue: #89b4fa;
-  --green: #a6e3a1;
-  --lavender: #b4befe;
-  --pink: #f5c2e7;
-  --overlay0: #6c7086;
 }
 
-.form {
-  display: flex;
-  flex-direction: column; /* ставим элементы вертикально */
-  gap: 1rem;              /* расстояние между ними */
-  width: 100%;
-}
-
-.form input {
-  display: block;         /* гарантируем блочный вид */
-  width: 85%;            /* растягиваем на всю ширину формы */
-  padding: 0.9rem 1rem;
-  border-radius: 0.7rem;
-  border: 2px solid var(--overlay0);
-  background-color: var(--crust);
-  color: var(--text);
-  font-size: 1rem;
-  transition: all 0.2s ease-in-out;
-}
-
-.form input::placeholder {
-  color: var(--subtext0);
-}
-
-.form input:focus {
-  outline: none;
-  border-color: var(--lavender);
-  box-shadow: 0 0 8px var(--lavender);
-  background-color: var(--mantle);
-}
-
-
+/* ===== Общий стиль ===== */
 body {
   margin: 0;
   padding: 0;
@@ -52,7 +34,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
+  flex-direction: column;
+  position: relative; /* Для фиксации футера внизу */
 }
 
 .container {
@@ -61,20 +45,17 @@ body {
   border-radius: 1.5rem;
   box-shadow: 0 8px 20px rgba(0,0,0,0.4);
   text-align: center;
+  max-width: 400px; /* Уменьшили максимальную ширину */
+  width: 100%;      /* Но оставили 100%, чтобы адаптироваться к экрану */
+  margin: 0 auto;   /* Центрируем по горизонтали */
 }
-
 .title {
   margin-bottom: 2rem;
   font-size: 1.8rem;
   color: var(--lavender);
 }
 
-.button-group {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
+/* ===== Кнопки ===== */
 .btn {
   text-decoration: none;
   padding: 0.8rem 1.5rem;
@@ -85,6 +66,13 @@ body {
   color: var(--crust);
   transition: all 0.2s ease-in-out;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  display: inline-block; /* Для корректной работы ширины */
+}
+
+/* Кнопки формы логина/регистрации — уменьшаем ширину */
+.form .btn {
+  width: 50%;
+  margin: 0 auto;
 }
 
 .btn:hover {
@@ -100,20 +88,119 @@ body {
   background-color: var(--pink);
 }
 
-footer{
-  position: fixed;
-  bottom: 0;
-  left: 0;
+/* ===== Формы (для логина/регистрации) ===== */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   width: 100%;
-  text-align: center;
-  padding: 0.5rem;
-  color: var(--subtext0);
-  font-size: 0.9rem;
 }
 
-/* static/css/banner.css */
+.form input,
+.form textarea {
+  display: block;
+  width: 50%; /* 🔥 УМЕНЬШЕНО НА ПОЛОВИНУ */
+  padding: 0.9rem 1rem;
+  border-radius: 0.7rem;
+  border: 2px solid var(--overlay0);
+  background-color: var(--crust);
+  color: var(--text);
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+  resize: none;
+  margin: 0 auto; /* Центрируем по горизонтали */
+}
 
-/* Общий стиль баннера */
+.form input::placeholder,
+.form textarea::placeholder {
+  color: var(--subtext0);
+}
+
+.form input:focus,
+.form textarea:focus {
+  outline: none;
+  border-color: var(--lavender);
+  box-shadow: 0 0 8px var(--lavender);
+  background-color: var(--mantle);
+}
+
+/* ===== Секция задач ===== */
+.task-section {
+  margin-top: 2rem;
+  text-align: left !important; /* 🔥 Принудительно отменяем центрирование */
+  width: 100%;
+}
+.task-item {
+  background: var(--crust);
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+} 
+
+.task-title {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.task-description {
+  margin: 0.5rem 0;
+  color: var(--subtext0);
+  line-height: 1.4;
+  text-align: left; /* 🔥 Обязательно! */
+  width: 100%;     /* 🔥 Чтобы занимал всю ширину блока */
+}
+/* ===== Кнопки задач ===== */
+.task-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.complete-btn, .delete-btn {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: 0.2s ease;
+    border: 2px solid transparent;
+    line-height: 1.2rem;
+    white-space: nowrap;
+}
+
+.complete-btn.done {
+    background-color: var(--green);
+    color: var(--base);
+}
+.complete-btn.done:hover {
+    background-color: var(--teal);
+}
+
+.complete-btn.not-done {
+    background-color: var(--red);
+    color: var(--base);
+}
+.complete-btn.not-done:hover {
+    background-color: var(--maroon);
+}
+
+.delete-btn {
+    background-color: var(--maroon);
+    color: var(--base);
+    border-color: var(--red);
+}
+.delete-btn:hover {
+    background-color: var(--red);
+    color: var(--mantle);
+}
+
+/* ===== Баннеры уведомлений ===== */
 .banner {
   position: fixed;
   top: 20px;
@@ -129,7 +216,6 @@ footer{
   z-index: 1000;
 }
 
-/* Цвета для успеха и ошибки */
 .banner.success {
   background: linear-gradient(45deg, #4CAF50, #81C784);
 }
@@ -138,7 +224,6 @@ footer{
   background: linear-gradient(45deg, #F44336, #E57373);
 }
 
-/* Анимации */
 @keyframes slideIn {
   to {
     opacity: 1;
@@ -151,4 +236,19 @@ footer{
     opacity: 0;
     transform: translateY(-20px);
   }
+}
+
+/* ===== Футер — СТРОГО ВНИЗУ ===== */
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 0.5rem;
+  color: var(--subtext0);
+  font-size: 0.9rem;
+  background-color: var(--mantle); /* Необязательно, но выглядит лучше */
+  z-index: 1000;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
 }

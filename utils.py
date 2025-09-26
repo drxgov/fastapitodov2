@@ -1,6 +1,8 @@
 from passlib.context import CryptContext
 from fastapi import HTTPException, status, Cookie, Depends, Request
 from datetime import datetime, timedelta
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import RedirectResponse
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session 
 import database
@@ -35,18 +37,18 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
 def get_current_user_from_request(request: Request, db: Session):
     token = request.cookies.get("access_token")
     if not token:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Требуется авторизация")
+        return RedirectResponse(url='/login', status_code=303)
 
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
         if username is None:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Неверный токен")
+            return RedirectResponse(url='/login', status_code=303)
     except jwt.JWTError:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Неверный токен")
+        return RedirectResponse(url='/login', status_code=303)
 
     user = db.query(models.User).filter(models.User.username == username).first()
     if user is None:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Пользователь не найден")
+        return RedirectResponse(url='/login', status_code=303)
 
     return user

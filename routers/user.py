@@ -50,9 +50,8 @@ async def registerUser(request: Request, username:str = Form(...), password:str 
     })
 
 @router.get("/login")
-async def loginPage(request: Request):
-    return templates.TemplateResponse("login.html",{'request': request})
-
+async def login_page(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
 
 @router.post("/login")
 async def loginUser(request: Request,username: str = Form(...), password: str = Form(...),db:Session = Depends(get_db)):
